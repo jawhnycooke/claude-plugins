@@ -42,7 +42,6 @@ Creates a git commit with an automatically generated commit message based on sta
 - Automatically drafts commit messages that match your repo's style
 - Follows conventional commit practices
 - Avoids committing files with secrets (.env, credentials.json)
-- Includes Claude Code attribution in commit message
 
 ### `/commit-push-pr`
 
@@ -79,7 +78,6 @@ Complete workflow command that commits, pushes, and creates a pull request in on
 - Creates comprehensive PR descriptions with:
   - Summary of changes (1-3 bullet points)
   - Test plan checklist
-  - Claude Code attribution
 - Handles branch creation automatically
 - Uses GitHub CLI (`gh`) for PR creation
 
