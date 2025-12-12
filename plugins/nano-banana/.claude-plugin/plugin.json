@@ -1,0 +1,10 @@
+{
+  "name": "nano-banana",
+  "description": "Interactive translator that converts plain English descriptions into structured JSON schemas for Nano Banana Pro (Gemini 3 Pro Image). Supports marketing images, UI mockups, diagrams, data visualizations, and social graphics.",
+  "author": {
+    "name": "Jawhny Cooke",
+    "email": "plugins@jawhnycooke.ai"
+  },
+  "version": "1.0.0",
+  "keywords": ["nano-banana", "gemini", "image-generation", "json", "prompting"]
+}

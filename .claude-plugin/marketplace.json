@@ -3,13 +3,17 @@
   "name": "claude-plugins-official",
   "description": "Directory of popular Claude Code extensions including development tools, productivity plugins, and MCP integrations",
   "owner": {
-    "name": "Anthropic",
-    "email": "support@anthropic.com"
+    "name": "Jawhny Cooke",
+    "email": "plugins@jawhnycooke.ai"
   },
   "plugins": [
     {
       "name": "agent-sdk-dev",
       "description": "Development kit for working with the Claude Agent SDK",
+      "author": {
+        "name": "Jawhny Cooke",
+        "email": "plugins@jawhnycooke.ai"
+      },
       "source": "./plugins/agent-sdk-dev",
       "category": "development",
       "homepage": "https://github.com/anthropics/claude-plugins-public/tree/main/plugins/agent-sdk-dev"
@@ -18,8 +22,8 @@
       "name": "pr-review-toolkit",
       "description": "Comprehensive PR review agents specializing in comments, tests, error handling, type design, code quality, and code simplification",
       "author": {
-        "name": "Anthropic",
-        "email": "support@anthropic.com"
+        "name": "Jawhny Cooke",
+        "email": "plugins@jawhnycooke.ai"
       },
       "source": "./plugins/pr-review-toolkit",
       "category": "productivity",
@@ -29,8 +33,8 @@
       "name": "commit-commands",
       "description": "Commands for git commit workflows including commit, push, and PR creation",
       "author": {
-        "name": "Anthropic",
-        "email": "support@anthropic.com"
+        "name": "Jawhny Cooke",
+        "email": "plugins@jawhnycooke.ai"
       },
       "source": "./plugins/commit-commands",
       "category": "productivity",
@@ -40,8 +44,8 @@
       "name": "feature-dev",
       "description": "Comprehensive feature development workflow with specialized agents for codebase exploration, architecture design, and quality review",
       "author": {
-        "name": "Siddharth Bidasaria",
-        "email": "sbidasaria@anthropic.com"
+        "name": "Jawhny Cooke",
+        "email": "plugins@jawhnycooke.ai"
       },
       "source": "./plugins/feature-dev",
       "category": "development",
@@ -51,8 +55,8 @@
       "name": "security-guidance",
       "description": "Security reminder hook that warns about potential security issues when editing files, including command injection, XSS, and unsafe code patterns",
       "author": {
-        "name": "David Dworken",
-        "email": "dworken@anthropic.com"
+        "name": "Jawhny Cooke",
+        "email": "plugins@jawhnycooke.ai"
       },
       "source": "./plugins/security-guidance",
       "category": "security",
@@ -62,8 +66,8 @@
       "name": "code-review",
       "description": "Automated code review for pull requests using multiple specialized agents with confidence-based scoring to filter false positives",
       "author": {
-        "name": "Boris Cherny",
-        "email": "boris@anthropic.com"
+        "name": "Jawhny Cooke",
+        "email": "plugins@jawhnycooke.ai"
       },
       "source": "./plugins/code-review",
       "category": "productivity",
@@ -73,8 +77,8 @@
       "name": "explanatory-output-style",
       "description": "Adds educational insights about implementation choices and codebase patterns (mimics the deprecated Explanatory output style)",
       "author": {
-        "name": "Dickson Tsai",
-        "email": "dickson@anthropic.com"
+        "name": "Jawhny Cooke",
+        "email": "plugins@jawhnycooke.ai"
       },
       "source": "./plugins/explanatory-output-style",
       "category": "learning",
@@ -84,8 +88,8 @@
       "name": "learning-output-style",
       "description": "Interactive learning mode that requests meaningful code contributions at decision points (mimics the unshipped Learning output style)",
       "author": {
-        "name": "Boris Cherny",
-        "email": "boris@anthropic.com"
+        "name": "Jawhny Cooke",
+        "email": "plugins@jawhnycooke.ai"
       },
       "source": "./plugins/learning-output-style",
       "category": "learning",
@@ -95,8 +99,8 @@
       "name": "frontend-design",
       "description": "Create distinctive, production-grade frontend interfaces with high design quality. Generates creative, polished code that avoids generic AI aesthetics.",
       "author": {
-        "name": "Prithvi Rajasekaran & Alexander Bricken",
-        "email": "prithvi@anthropic.com"
+        "name": "Jawhny Cooke",
+        "email": "plugins@jawhnycooke.ai"
       },
       "source": "./plugins/frontend-design",
       "category": "development",
@@ -106,8 +110,8 @@
       "name": "ralph-wiggum",
       "description": "Interactive self-referential AI loops for iterative development. Claude works on the same task repeatedly, seeing its previous work, until completion.",
       "author": {
-        "name": "Daisy Hollman",
-        "email": "daisy@anthropic.com"
+        "name": "Jawhny Cooke",
+        "email": "plugins@jawhnycooke.ai"
       },
       "source": "./plugins/ralph-wiggum",
       "category": "development",
@@ -117,8 +121,8 @@
       "name": "hookify",
       "description": "Easily create custom hooks to prevent unwanted behaviors by analyzing conversation patterns or from explicit instructions. Define rules via simple markdown files.",
       "author": {
-        "name": "Daisy Hollman",
-        "email": "daisy@anthropic.com"
+        "name": "Jawhny Cooke",
+        "email": "plugins@jawhnycooke.ai"
       },
       "source": "./plugins/hookify",
       "category": "productivity",
@@ -128,12 +132,45 @@
       "name": "plugin-dev",
       "description": "Comprehensive toolkit for developing Claude Code plugins. Includes 7 expert skills covering hooks, MCP integration, commands, agents, and best practices. AI-assisted plugin creation and validation.",
       "author": {
-        "name": "Daisy Hollman",
-        "email": "daisy@anthropic.com"
+        "name": "Jawhny Cooke",
+        "email": "plugins@jawhnycooke.ai"
       },
       "source": "./plugins/plugin-dev",
       "category": "development",
       "homepage": "https://github.com/anthropics/claude-plugins-public/tree/main/plugins/plugin-dev"
+    },
+    {
+      "name": "example-plugin",
+      "description": "A comprehensive example plugin demonstrating all Claude Code extension options including commands, agents, skills, hooks, and MCP servers",
+      "author": {
+        "name": "Jawhny Cooke",
+        "email": "plugins@jawhnycooke.ai"
+      },
+      "source": "./plugins/example-plugin",
+      "category": "learning",
+      "homepage": "https://github.com/anthropics/claude-plugins-public/tree/main/plugins/example-plugin"
+    },
+    {
+      "name": "nano-banana",
+      "description": "Interactive translator that converts plain English descriptions into structured JSON schemas for Nano Banana Pro (Gemini 3 Pro Image). Supports marketing images, UI mockups, diagrams, data visualizations, and social graphics.",
+      "author": {
+        "name": "Jawhny Cooke",
+        "email": "plugins@jawhnycooke.ai"
+      },
+      "source": "./plugins/nano-banana",
+      "category": "design",
+      "homepage": "https://github.com/jawhnycooke/claude-code-nano-banana"
+    },
+    {
+      "name": "anime-mj",
+      "description": "Anime/manga prompt builder for Midjourney Niji mode. Features 30+ manga artists, 14 anime studios, 40+ SREF codes, character consistency workflows, and video/animation support.",
+      "author": {
+        "name": "Jawhny Cooke",
+        "email": "plugins@jawhnycooke.ai"
+      },
+      "source": "./plugins/anime-mj",
+      "category": "design",
+      "homepage": "https://github.com/jawhnycooke/claude-code-anime-mj"
     },
     {
       "name": "greptile",
@@ -255,17 +292,6 @@
       "source": "./external_plugins/context7",
       "homepage": "https://github.com/anthropics/claude-plugins-public/tree/main/external_plugins/context7",
       "tags": ["community-managed"]
-    },
-    {
-      "name": "example-plugin",
-      "description": "Adds educational insights about implementation choices and codebase patterns (mimics the deprecated Explanatory output style)",
-      "author": {
-        "name": "Dickson Tsai",
-        "email": "dickson@anthropic.com"
-      },
-      "source": "./plugins/example-plugin",
-      "category": "learning",
-      "homepage": "https://github.com/anthropics/claude-plugins-public/tree/main/plugins/example-plugin"
     }
   ]
 }

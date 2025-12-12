@@ -1,0 +1,21 @@
+{
+  "name": "anime-mj",
+  "description": "Anime/manga prompt builder for Midjourney Niji mode. Features 30+ manga artists, 14 anime studios, 40+ SREF codes, character consistency workflows, and video/animation support.",
+  "author": {
+    "name": "Jawhny Cooke",
+    "email": "plugins@jawhnycooke.ai"
+  },
+  "version": "1.0.4",
+  "keywords": [
+    "anime",
+    "manga",
+    "niji",
+    "midjourney",
+    "ghibli",
+    "shonen",
+    "seinen",
+    "sref",
+    "prompt-engineering",
+    "ai-art"
+  ]
+}
