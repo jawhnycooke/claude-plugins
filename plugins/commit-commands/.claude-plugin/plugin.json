@@ -1,0 +1,9 @@
+{
+  "name": "commit-commands",
+  "version": "1.0.1",
+  "description": "Streamline your git workflow with simple commands for committing, pushing, and creating pull requests",
+  "author": {
+    "name": "Jawhny Cooke",
+    "email": "plugins@jawhnycooke.ai"
+  }
+}

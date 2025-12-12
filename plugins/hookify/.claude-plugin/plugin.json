@@ -1,0 +1,9 @@
+{
+  "name": "hookify",
+  "version": "1.1.0",
+  "description": "Easily create hooks to prevent unwanted behaviors by analyzing conversation patterns",
+  "author": {
+    "name": "Jawhny Cooke",
+    "email": "plugins@jawhnycooke.ai"
+  }
+}

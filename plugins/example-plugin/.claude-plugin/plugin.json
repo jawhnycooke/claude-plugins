@@ -1,0 +1,9 @@
+{
+  "name": "example-plugin",
+  "version": "1.0.1",
+  "description": "A comprehensive example plugin demonstrating all Claude Code extension options including commands, agents, skills, hooks, and MCP servers",
+  "author": {
+    "name": "Jawhny Cooke",
+    "email": "plugins@jawhnycooke.ai"
+  }
+}
