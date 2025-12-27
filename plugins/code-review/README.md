@@ -15,8 +15,8 @@ Performs automated code review on a pull request using multiple specialized agen
 **What it does:**
 1. Checks if review is needed (skips closed, draft, trivial, or already-reviewed PRs)
 2. Gathers relevant CLAUDE.md guideline files from the repository
-3. Summarizes the PR and **detects change types** (error handling, tests, new types)
-4. Launches **5 core agents + up to 3 specialized agents** in parallel:
+3. Summarizes the PR and **detects change types** (error handling, tests, new types, comments)
+4. Launches **5 core agents + up to 4 specialized agents** in parallel:
    - **Agent #1**: Audit for CLAUDE.md compliance
    - **Agent #2**: Shallow scan for obvious bugs
    - **Agent #3**: Git blame/history context analysis
@@ -25,11 +25,13 @@ Performs automated code review on a pull request using multiple specialized agen
    - **Agent #6** (conditional): Silent failure detection (if error handling modified)
    - **Agent #7** (conditional): Test coverage analysis (if test files modified)
    - **Agent #8** (conditional): Type design analysis (if new types introduced)
+   - **Agent #9** (conditional): Comment accuracy analysis (if comments modified)
 5. Scores each issue for **confidence (0-100)** and **severity (CRITICAL/HIGH/MEDIUM/LOW)**
 6. Filters out issues below 80 confidence threshold
 7. **Consensus scoring** for borderline issues (60-85): 3 independent scorers vote
 8. Re-checks eligibility before posting
 9. Posts review comment grouped by severity with high-confidence issues only
+10. **Suggests code simplification** if no critical issues found (optional)
 
 **Usage:**
 ```bash
@@ -42,11 +44,12 @@ Performs automated code review on a pull request using multiple specialized agen
 /code-review
 
 # Claude will:
-# - Detect change types (error handling, tests, new types)
-# - Launch 5-8 review agents in parallel
+# - Detect change types (error handling, tests, new types, comments)
+# - Launch 5-9 review agents in parallel
 # - Score issues for confidence AND severity
 # - Use consensus voting for borderline issues
 # - Post comment grouped by CRITICAL > HIGH > MEDIUM
+# - Offer to simplify code if review passes
 ```
 
 ## Specialized Agents
@@ -81,6 +84,26 @@ Analyzes:
 - Invariant expression (is the design self-documenting?)
 - Invariant usefulness (do they prevent real bugs?)
 - Invariant enforcement (are all mutation points guarded?)
+
+### Comment Analyzer
+**Triggered when:** Docstrings, JSDoc comments, or significant inline comments are modified
+
+Analyzes:
+- Factual accuracy (do comments match actual code behavior?)
+- Completeness (are critical assumptions documented?)
+- Long-term value (will comments help future maintainers?)
+- Misleading elements (outdated references, ambiguous language)
+- Comment rot prevention (flag comments likely to become stale)
+
+### Code Simplifier
+**Triggered when:** Review passes with no CRITICAL or HIGH issues (user confirmation required)
+
+Provides:
+- Clarity improvements while preserving functionality
+- Project coding standard enforcement
+- Redundancy removal and readability enhancements
+- Nested ternary elimination
+- Import sorting and consistent patterns
 
 ## Severity Classification
 
@@ -147,6 +170,9 @@ No issues found. Checked for bugs, CLAUDE.md compliance, and specialized analysi
 - Error handling review ✓
 - Test coverage analysis ✓
 - Type design review ✓
+- Comment accuracy review ✓
+
+Would you like me to run the code-simplifier to improve clarity and maintainability?
 ```
 
 ## False Positives Filtered
@@ -180,6 +206,7 @@ This plugin is included in the Claude Code repository. The command is automatica
 - PRs with error handling changes (triggers silent-failure-hunter)
 - PRs modifying tests (triggers pr-test-analyzer)
 - PRs introducing new types (triggers type-design-analyzer)
+- PRs with documentation changes (triggers comment-analyzer)
 
 ### When not to use
 - Closed or draft PRs (automatically skipped anyway)
@@ -221,7 +248,7 @@ This plugin is included in the Claude Code repository. The command is automatica
 
 **Solution**:
 - Normal for large changes - agents run in parallel
-- Up to 8 independent agents ensure thoroughness
+- Up to 9 independent agents ensure thoroughness
 - Specialized agents only run when relevant (detected automatically)
 - Consider splitting large PRs into smaller ones
 
@@ -312,6 +339,8 @@ Edit `commands/code-review.md` to add or modify agent tasks:
 - **Silent Failure Hunter**: Activated when error handling is modified
 - **PR Test Analyzer**: Activated when test files are modified
 - **Type Design Analyzer**: Activated when new types are introduced
+- **Comment Analyzer**: Activated when comments/docstrings are modified
+- **Code Simplifier**: Suggested after review passes (user opt-in)
 
 ### Scoring system
 - Each issue independently scored 0-100 for confidence
@@ -325,6 +354,7 @@ The plugin automatically detects:
 - `hasErrorHandling`: try/catch/except/finally/.catch blocks modified
 - `hasTestFiles`: Files matching *test*, *spec*, __tests__/*, tests/*
 - `hasNewTypes`: New interface/type/class/struct/enum/@dataclass definitions
+- `hasCommentChanges`: Docstrings, JSDoc, or significant inline comments modified
 
 ### GitHub integration
 Uses `gh` CLI for:
@@ -340,4 +370,4 @@ Jawhny Cooke (plugins@jawhnycooke.ai)
 
 ## Version
 
-2.0.0
+2.1.0

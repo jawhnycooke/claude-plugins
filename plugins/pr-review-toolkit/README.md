@@ -1,5 +1,11 @@
 # PR Review Toolkit
 
+> **DEPRECATED**: This plugin has been superseded by the **code-review** plugin (v2.1.0+), which includes all functionality from pr-review-toolkit plus automatic change detection and a unified review workflow. Please use `/code-review` instead.
+>
+> **Migration**: Simply use `/code-review` - it automatically triggers the appropriate specialized agents based on what changed in your PR.
+
+---
+
 A comprehensive collection of specialized agents for thorough pull request review, covering code comments, test coverage, error handling, type design, code quality, and code simplification.
 
 ## Overview
