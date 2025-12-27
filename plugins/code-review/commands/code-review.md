@@ -21,6 +21,7 @@ Use a Haiku agent to view the pull request and return:
   - `hasErrorHandling`: true if try/catch/except/finally/.catch blocks are modified
   - `hasTestFiles`: true if files match *test*, *spec*, __tests__/*, tests/*
   - `hasNewTypes`: true if new interface/type/class/struct/enum/@dataclass definitions are introduced
+  - `hasCommentChanges`: true if docstrings, JSDoc comments, or significant inline comments are added/modified
 
 ## Step 4: Parallel Review Agents
 Launch parallel Sonnet agents to independently code review. Each agent returns issues with description, reason, and **suggested_severity** (CRITICAL/HIGH/MEDIUM/LOW).
@@ -36,6 +37,7 @@ e. Agent #5: Ensure changes comply with guidance in code comments.
 f. Agent #6 (if hasErrorHandling): Use the **silent-failure-hunter** agent to identify silent failures, inadequate error handling, empty catch blocks, and inappropriate fallback behavior.
 g. Agent #7 (if hasTestFiles): Use the **pr-test-analyzer** agent to review test coverage quality, identify critical gaps, and evaluate test quality.
 h. Agent #8 (if hasNewTypes): Use the **type-design-analyzer** agent to analyze type encapsulation, invariant expression, and rate type design quality.
+i. Agent #9 (if hasCommentChanges): Use the **comment-analyzer** agent to verify comment accuracy, identify misleading documentation, and prevent comment rot.
 
 ## Step 5: Confidence + Severity Scoring
 For each issue found in Step 4, launch a parallel Haiku agent that returns:
@@ -109,8 +111,22 @@ No issues found. Checked for bugs, CLAUDE.md compliance, and specialized analysi
 - Error handling review ✓
 - Test coverage analysis ✓
 - Type design review ✓
+- Comment accuracy review ✓
 
 ---
+
+## Step 9: Simplification Suggestion (Optional)
+After posting the review comment, if the review passed with **no CRITICAL or HIGH issues**:
+
+1. Inform the user: "The code review found no critical issues. Would you like me to run the **code-simplifier** agent to improve code clarity and maintainability?"
+2. If the user agrees, launch the **code-simplifier** agent on the changed files
+3. The code-simplifier will:
+   - Analyze the changed code for clarity improvements
+   - Suggest simplifications while preserving functionality
+   - Apply project coding standards
+   - Remove redundancy and improve readability
+
+Note: This step is optional and requires user confirmation before proceeding.
 
 ## Examples of False Positives
 
