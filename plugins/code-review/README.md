@@ -1,10 +1,10 @@
 # Code Review Plugin
 
-Automated code review for pull requests using multiple specialized agents with confidence-based scoring to filter false positives.
+Automated code review for pull requests using multiple specialized agents with confidence-based scoring, severity classification, and consensus validation to filter false positives.
 
 ## Overview
 
-The Code Review Plugin automates pull request review by launching multiple agents in parallel to independently audit changes from different perspectives. It uses confidence scoring to filter out false positives, ensuring only high-quality, actionable feedback is posted.
+The Code Review Plugin automates pull request review by launching multiple agents in parallel to independently audit changes from different perspectives. It uses confidence scoring combined with severity classification to deliver actionable, prioritized feedback. Specialized agents are automatically triggered based on the type of changes detected.
 
 ## Commands
 
@@ -15,14 +15,21 @@ Performs automated code review on a pull request using multiple specialized agen
 **What it does:**
 1. Checks if review is needed (skips closed, draft, trivial, or already-reviewed PRs)
 2. Gathers relevant CLAUDE.md guideline files from the repository
-3. Summarizes the pull request changes
-4. Launches 4 parallel agents to independently review:
-   - **Agents #1 & #2**: Audit for CLAUDE.md compliance
-   - **Agent #3**: Scan for obvious bugs in changes
-   - **Agent #4**: Analyze git blame/history for context-based issues
-5. Scores each issue 0-100 for confidence level
+3. Summarizes the PR and **detects change types** (error handling, tests, new types)
+4. Launches **5 core agents + up to 3 specialized agents** in parallel:
+   - **Agent #1**: Audit for CLAUDE.md compliance
+   - **Agent #2**: Shallow scan for obvious bugs
+   - **Agent #3**: Git blame/history context analysis
+   - **Agent #4**: Check previous PR comments on touched files
+   - **Agent #5**: Verify compliance with code comments
+   - **Agent #6** (conditional): Silent failure detection (if error handling modified)
+   - **Agent #7** (conditional): Test coverage analysis (if test files modified)
+   - **Agent #8** (conditional): Type design analysis (if new types introduced)
+5. Scores each issue for **confidence (0-100)** and **severity (CRITICAL/HIGH/MEDIUM/LOW)**
 6. Filters out issues below 80 confidence threshold
-7. Posts review comment with high-confidence issues only
+7. **Consensus scoring** for borderline issues (60-85): 3 independent scorers vote
+8. Re-checks eligibility before posting
+9. Posts review comment grouped by severity with high-confidence issues only
 
 **Usage:**
 ```bash
@@ -35,54 +42,124 @@ Performs automated code review on a pull request using multiple specialized agen
 /code-review
 
 # Claude will:
-# - Launch 4 review agents in parallel
-# - Score each issue for confidence
-# - Post comment with issues ≥80 confidence
-# - Skip posting if no high-confidence issues found
+# - Detect change types (error handling, tests, new types)
+# - Launch 5-8 review agents in parallel
+# - Score issues for confidence AND severity
+# - Use consensus voting for borderline issues
+# - Post comment grouped by CRITICAL > HIGH > MEDIUM
 ```
 
-**Features:**
-- Multiple independent agents for comprehensive review
-- Confidence-based scoring reduces false positives (threshold: 80)
-- CLAUDE.md compliance checking with explicit guideline verification
-- Bug detection focused on changes (not pre-existing issues)
-- Historical context analysis via git blame
-- Automatic skipping of closed, draft, or already-reviewed PRs
-- Links directly to code with full SHA and line ranges
+## Specialized Agents
 
-**Review comment format:**
+The plugin automatically triggers specialized agents based on what changed in the PR:
+
+### Silent Failure Hunter
+**Triggered when:** Error handling code is modified (try/catch/except/finally blocks)
+
+Analyzes:
+- Empty catch blocks (absolutely forbidden)
+- Silent failures without logging or user feedback
+- Overly broad exception catching
+- Inappropriate fallback behavior
+- Missing error context in logs
+
+### PR Test Analyzer
+**Triggered when:** Test files are modified (*test*, *spec*, __tests__/*, tests/*)
+
+Analyzes:
+- Behavioral coverage vs line coverage
+- Critical untested code paths
+- Missing edge case coverage
+- Test quality and resilience to refactoring
+- Anti-patterns (excessive mocking, weak assertions)
+
+### Type Design Analyzer
+**Triggered when:** New types are introduced (interface/type/class/struct/enum/@dataclass)
+
+Analyzes:
+- Encapsulation quality (are invariants protected?)
+- Invariant expression (is the design self-documenting?)
+- Invariant usefulness (do they prevent real bugs?)
+- Invariant enforcement (are all mutation points guarded?)
+
+## Severity Classification
+
+Each issue is classified by severity, independent of confidence:
+
+| Severity | Definition | Examples |
+|----------|------------|----------|
+| **CRITICAL** | Security vulnerabilities, data loss, crashes, breaking API changes | SQL injection, unhandled null causing crash |
+| **HIGH** | Logic bugs, broken functionality, significant performance issues | Race condition, missing validation |
+| **MEDIUM** | Code quality, minor performance, incomplete error messages | Poor error message, CLAUDE.md style violation |
+| **LOW** | Minor style, documentation, refactoring suggestions | Nitpicks not in CLAUDE.md |
+
+## Confidence Scoring
+
+Each issue is independently scored 0-100 for confidence:
+
+| Score | Meaning |
+|-------|---------|
+| **0** | Not confident at all. False positive or pre-existing issue. |
+| **25** | Somewhat confident. Might be real, might be false positive. |
+| **50** | Moderately confident. Real issue but might be a nitpick. |
+| **75** | Highly confident. Very likely real and will be hit in practice. |
+| **100** | Absolutely certain. Definitely real and will happen frequently. |
+
+### Consensus Scoring
+
+For borderline issues (confidence 60-85):
+1. Two additional independent scorers evaluate the issue
+2. Each scorer receives the PR diff, issue description, and CLAUDE.md files
+3. Scorers are NOT told the original score
+4. **Consensus rules:**
+   - If 2/3 score ≥80: Issue passes (included in output)
+   - If 2/3 score <80: Issue fails (excluded from output)
+   - Final score = median of all 3 scores
+
+## Review Comment Format
+
 ```markdown
-## Code review
+### Code review
 
-Found 3 issues:
+Found 3 issues (1 CRITICAL, 1 HIGH, 1 MEDIUM):
 
-1. Missing error handling for OAuth callback (CLAUDE.md says "Always handle OAuth errors")
+**CRITICAL** [95% confidence]
+1. SQL injection vulnerability (security)
 
-https://github.com/owner/repo/blob/abc123.../src/auth.ts#L67-L72
+https://github.com/owner/repo/blob/abc123.../src/db.ts#L67-L72
 
-2. Memory leak: OAuth state not cleaned up (bug due to missing cleanup in finally block)
+**HIGH** [88% confidence]
+2. Missing validation allows invalid state (bug)
 
 https://github.com/owner/repo/blob/abc123.../src/auth.ts#L88-L95
 
-3. Inconsistent naming pattern (src/conventions/CLAUDE.md says "Use camelCase for functions")
+**MEDIUM** [82% confidence, consensus 3/3]
+3. Empty catch block swallows errors (error-handling)
 
 https://github.com/owner/repo/blob/abc123.../src/utils.ts#L23-L28
 ```
 
-**Confidence scoring:**
-- **0**: Not confident, false positive
-- **25**: Somewhat confident, might be real
-- **50**: Moderately confident, real but minor
-- **75**: Highly confident, real and important
-- **100**: Absolutely certain, definitely real
+If no issues found:
+```markdown
+### Code review
 
-**False positives filtered:**
+No issues found. Checked for bugs, CLAUDE.md compliance, and specialized analysis:
+- Error handling review ✓
+- Test coverage analysis ✓
+- Type design review ✓
+```
+
+## False Positives Filtered
+
+The plugin filters out:
 - Pre-existing issues not introduced in PR
 - Code that looks like a bug but isn't
-- Pedantic nitpicks
-- Issues linters will catch
+- Pedantic nitpicks a senior engineer wouldn't call out
+- Issues linters/typecheckers/compilers catch (CI handles these)
 - General quality issues (unless in CLAUDE.md)
-- Issues with lint ignore comments
+- Issues explicitly silenced in code
+- Intentional functionality changes related to the broader change
+- Real issues on lines the user did not modify
 
 ## Installation
 
@@ -93,15 +170,16 @@ This plugin is included in the Claude Code repository. The command is automatica
 ### Using `/code-review`
 - Maintain clear CLAUDE.md files for better compliance checking
 - Trust the 80+ confidence threshold - false positives are filtered
+- Pay attention to severity: CRITICAL and HIGH need immediate action
+- Consensus scoring ensures borderline issues are validated
 - Run on all non-trivial pull requests
-- Review agent findings as a starting point for human review
-- Update CLAUDE.md based on recurring review patterns
 
 ### When to use
 - All pull requests with meaningful changes
 - PRs touching critical code paths
-- PRs from multiple contributors
-- PRs where guideline compliance matters
+- PRs with error handling changes (triggers silent-failure-hunter)
+- PRs modifying tests (triggers pr-test-analyzer)
+- PRs introducing new types (triggers type-design-analyzer)
 
 ### When not to use
 - Closed or draft PRs (automatically skipped anyway)
@@ -116,7 +194,8 @@ This plugin is included in the Claude Code repository. The command is automatica
 # Create PR with changes
 /code-review
 
-# Review the automated feedback
+# Review the automated feedback (grouped by severity)
+# Address CRITICAL and HIGH issues first
 # Make any necessary fixes
 # Merge when ready
 ```
@@ -142,7 +221,8 @@ This plugin is included in the Claude Code repository. The command is automatica
 
 **Solution**:
 - Normal for large changes - agents run in parallel
-- 4 independent agents ensure thoroughness
+- Up to 8 independent agents ensure thoroughness
+- Specialized agents only run when relevant (detected automatically)
 - Consider splitting large PRs into smaller ones
 
 ### Too many false positives
@@ -151,6 +231,7 @@ This plugin is included in the Claude Code repository. The command is automatica
 
 **Solution**:
 - Default threshold is 80 (already filters most false positives)
+- Borderline issues (60-85) go through consensus scoring
 - Make CLAUDE.md more specific about what matters
 - Consider if the flagged issue is actually valid
 
@@ -192,10 +273,10 @@ https://github.com/owner/repo/blob/[full-sha]/path/file.ext#L[start]-L[end]
 
 - **Write specific CLAUDE.md files**: Clear guidelines = better reviews
 - **Include context in PRs**: Helps agents understand intent
-- **Use confidence scores**: Issues ≥80 are usually correct
-- **Iterate on guidelines**: Update CLAUDE.md based on patterns
+- **Use severity for prioritization**: CRITICAL > HIGH > MEDIUM > LOW
+- **Trust consensus scoring**: Borderline issues are validated by 3 scorers
 - **Review automatically**: Set up as part of PR workflow
-- **Trust the filtering**: Threshold prevents noise
+- **Trust the filtering**: Threshold and consensus prevent noise
 
 ## Configuration
 
@@ -203,7 +284,7 @@ https://github.com/owner/repo/blob/[full-sha]/path/file.ext#L[start]-L[end]
 
 The default threshold is 80. To adjust, modify the command file at `commands/code-review.md`:
 ```markdown
-Filter out any issues with a score less than 80.
+Filter out any issues with a confidence score less than 80.
 ```
 
 Change `80` to your preferred threshold (0-100).
@@ -219,28 +300,44 @@ Edit `commands/code-review.md` to add or modify agent tasks:
 ## Technical Details
 
 ### Agent architecture
-- **2x CLAUDE.md compliance agents**: Redundancy for guideline checks
-- **1x bug detector**: Focused on obvious bugs in changes only
-- **1x history analyzer**: Context from git blame and history
-- **Nx confidence scorers**: One per issue for independent scoring
+
+**Core Agents (always run):**
+- **CLAUDE.md compliance agent**: Verifies guideline adherence
+- **Bug detector**: Focused on obvious bugs in changes only
+- **History analyzer**: Context from git blame and history
+- **Previous PR checker**: Relevant comments from past PRs
+- **Code comment verifier**: Compliance with inline guidance
+
+**Specialized Agents (conditional):**
+- **Silent Failure Hunter**: Activated when error handling is modified
+- **PR Test Analyzer**: Activated when test files are modified
+- **Type Design Analyzer**: Activated when new types are introduced
 
 ### Scoring system
-- Each issue independently scored 0-100
-- Scoring considers evidence strength and verification
+- Each issue independently scored 0-100 for confidence
+- Each issue classified as CRITICAL/HIGH/MEDIUM/LOW for severity
 - Threshold (default 80) filters low-confidence issues
+- Borderline issues (60-85) validated via 3-scorer consensus
 - For CLAUDE.md issues: verifies guideline explicitly mentions it
+
+### Change detection
+The plugin automatically detects:
+- `hasErrorHandling`: try/catch/except/finally/.catch blocks modified
+- `hasTestFiles`: Files matching *test*, *spec*, __tests__/*, tests/*
+- `hasNewTypes`: New interface/type/class/struct/enum/@dataclass definitions
 
 ### GitHub integration
 Uses `gh` CLI for:
 - Viewing PR details and diffs
 - Fetching repository data
 - Reading git blame and history
+- Checking previous PR comments
 - Posting review comments
 
 ## Author
 
-Boris Cherny (boris@anthropic.com)
+Jawhny Cooke (plugins@jawhnycooke.ai)
 
 ## Version
 
-1.0.0
+2.0.0
