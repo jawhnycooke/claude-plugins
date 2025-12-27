@@ -64,7 +64,7 @@
     },
     {
       "name": "code-review",
-      "description": "Automated code review for pull requests using multiple specialized agents with confidence-based scoring to filter false positives",
+      "description": "Automated code review for pull requests using multiple specialized agents with confidence-based scoring, severity classification, and consensus validation. Automatically triggers error handling, test coverage, and type design analysis based on changes.",
       "author": {
         "name": "Jawhny Cooke",
         "email": "plugins@jawhnycooke.ai"

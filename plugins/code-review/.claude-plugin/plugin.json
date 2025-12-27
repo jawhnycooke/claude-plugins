@@ -1,7 +1,7 @@
 {
   "name": "code-review",
-  "version": "1.0.1",
-  "description": "Automated code review for pull requests using multiple specialized agents with confidence-based scoring",
+  "version": "2.0.0",
+  "description": "Automated code review for pull requests using multiple specialized agents with confidence-based scoring, severity classification, and consensus validation",
   "author": {
     "name": "Jawhny Cooke",
     "email": "plugins@jawhnycooke.ai"
