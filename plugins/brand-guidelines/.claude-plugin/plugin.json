@@ -1,0 +1,9 @@
+{
+  "name": "brand-guidelines",
+  "version": "1.0.0",
+  "description": "Apply Anthropic's official brand colors and typography to visual artifacts. Includes brand color palette, typography standards, and automatic styling.",
+  "author": {
+    "name": "Jawhny Cooke",
+    "email": "plugins@jawhnycooke.ai"
+  }
+}

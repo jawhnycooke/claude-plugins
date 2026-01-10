@@ -1,0 +1,9 @@
+{
+  "name": "ms-office-suite",
+  "version": "1.0.0",
+  "description": "Create, edit, and analyze Microsoft Office documents (Word, Excel, PowerPoint) and PDFs. Includes professional document workflows with tracked changes, form filling, and formula validation.",
+  "author": {
+    "name": "Jawhny Cooke",
+    "email": "plugins@jawhnycooke.ai"
+  }
+}

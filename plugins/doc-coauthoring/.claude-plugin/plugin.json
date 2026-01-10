@@ -1,0 +1,9 @@
+{
+  "name": "doc-coauthoring",
+  "version": "1.0.0",
+  "description": "Structured collaborative document creation workflow with three stages: context gathering, refinement & structure, and reader testing. Creates professional documentation, proposals, and technical specs.",
+  "author": {
+    "name": "Jawhny Cooke",
+    "email": "plugins@jawhnycooke.ai"
+  }
+}

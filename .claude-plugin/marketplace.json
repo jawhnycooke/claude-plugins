@@ -173,6 +173,39 @@
       "homepage": "https://github.com/jawhnycooke/claude-code-anime-mj"
     },
     {
+      "name": "ms-office-suite",
+      "description": "Create, edit, and analyze Microsoft Office documents (Word, Excel, PowerPoint) and PDFs. Includes professional document workflows with tracked changes, form filling, formula validation, and HTML-to-PPTX conversion.",
+      "author": {
+        "name": "Jawhny Cooke",
+        "email": "plugins@jawhnycooke.ai"
+      },
+      "source": "./plugins/ms-office-suite",
+      "category": "productivity",
+      "homepage": "https://github.com/anthropics/skills/tree/main/skills"
+    },
+    {
+      "name": "brand-guidelines",
+      "description": "Apply Anthropic's official brand colors and typography to visual artifacts. Includes brand color palette (Dark, Light, Orange, Blue, Green), typography standards (Poppins headings, Lora body), and automatic styling rules.",
+      "author": {
+        "name": "Jawhny Cooke",
+        "email": "plugins@jawhnycooke.ai"
+      },
+      "source": "./plugins/brand-guidelines",
+      "category": "design",
+      "homepage": "https://github.com/anthropics/skills/tree/main/skills/brand-guidelines"
+    },
+    {
+      "name": "doc-coauthoring",
+      "description": "Structured collaborative document creation workflow with three stages: context gathering, refinement & structure, and reader testing. Creates professional documentation, proposals, technical specs, and decision documents.",
+      "author": {
+        "name": "Jawhny Cooke",
+        "email": "plugins@jawhnycooke.ai"
+      },
+      "source": "./plugins/doc-coauthoring",
+      "category": "productivity",
+      "homepage": "https://github.com/anthropics/skills/tree/main/skills/doc-coauthoring"
+    },
+    {
       "name": "greptile",
       "description": "AI-powered codebase search and understanding. Query your repositories using natural language to find relevant code, understand dependencies, and get contextual answers about your codebase architecture.",
       "category": "development",
