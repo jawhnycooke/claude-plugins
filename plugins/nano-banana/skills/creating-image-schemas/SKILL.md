@@ -1,6 +1,6 @@
 ---
-name: json-prompting-for-nano-banana
-description: Converts natural language descriptions into structured JSON schemas for Nano Banana Pro (Gemini 3 Pro Image). Use when creating marketing images, UI mockups, diagrams, data visualizations, or social media graphics that require precise control and reproducibility. Supports five schema types for product photography, interfaces, flowcharts, charts, and social content.
+name: creating-image-schemas
+description: Converts natural language descriptions into structured JSON schemas for Nano Banana Pro (Gemini 3 Pro Image) across five schema types covering marketing images, UI mockups, diagrams, data visualizations, and social media graphics. Activates when the user needs precise, reproducible control over image generation with defined specifications.
 ---
 
 # JSON Prompting for Nano Banana Pro

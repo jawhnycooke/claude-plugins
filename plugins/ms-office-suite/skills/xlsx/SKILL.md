@@ -1,6 +1,6 @@
 ---
-name: xlsx
-description: Use this skill when working with Excel spreadsheets (.xlsx, .xlsm, .csv) - creating worksheets, adding formulas, formatting cells, building financial models, or data analysis.
+name: analyzing-spreadsheets
+description: Creates, edits, and analyzes Excel spreadsheets (.xlsx, .xlsm, .csv), including formula-based calculations, cell formatting, financial modeling, and data analysis with pandas and openpyxl. Activates when the user works with spreadsheet files or requests Excel-related tasks.
 ---
 
 # Excel Spreadsheet (.xlsx) Guide

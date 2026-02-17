@@ -1,4 +1,4 @@
-# Claude Code Plugins
+# Jawhny Cooke - Claude Code Plugins Directory
 
 A collection of plugins for Claude Code. Some I built, some are from partners.
 

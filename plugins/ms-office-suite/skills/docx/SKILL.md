@@ -1,6 +1,6 @@
 ---
-name: docx
-description: Use this skill when working with Word documents (.docx files) - creating, editing, reading, adding tracked changes, comments, or formatting.
+name: editing-word-documents
+description: Reads, creates, edits, and formats Word documents (.docx files), including tracked changes, comments, and template-based generation. Activates when the user works with .docx files or requests document authoring, redlining, or text extraction from Word documents.
 ---
 
 # Word Document (.docx) Guide

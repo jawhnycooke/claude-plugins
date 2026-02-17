@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "jawhny-cooke-claude-plugins",
-  "description": "Directory of Jawhny Cookes favorite Claude Code extensions including development tools, productivity plugins, and MCP integrations",
+  "description": "Jawhny Cooke - Claude Code Plugins Directory. A curated collection of Claude Code extensions including development tools, productivity plugins, and MCP integrations",
   "owner": {
     "name": "Jawhny Cooke",
     "email": "plugins@jawhnycooke.ai"

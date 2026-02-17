@@ -1,6 +1,6 @@
 ---
-name: pptx
-description: Use this skill when working with PowerPoint presentations (.pptx files) - creating slides, editing existing presentations, adding charts/tables, or converting HTML to PPTX.
+name: creating-presentations
+description: Creates, edits, and analyzes PowerPoint presentations (.pptx files), including slide design, chart and table insertion, HTML-to-PPTX conversion, and template-based generation. Activates when the user works with .pptx files or requests presentation authoring.
 ---
 
 # PowerPoint (.pptx) Guide

@@ -1,7 +1,6 @@
 ---
-name: Writing Hookify Rules
-description: This skill should be used when the user asks to "create a hookify rule", "write a hook rule", "configure hookify", "add a hookify rule", or needs guidance on hookify rule syntax and patterns.
-version: 0.1.0
+name: writing-hookify-rules
+description: Guides creation of hookify rules in .claude/hookify.{name}.local.md files, including YAML frontmatter fields (name, enabled, event, pattern, action, conditions), event types (bash, file, stop, prompt, all), regex pattern writing, condition operators, and rule organization. Activates when the user asks to create a hookify rule, write a hook rule, configure hookify, or add pattern-based automation rules.
 ---
 
 # Writing Hookify Rules

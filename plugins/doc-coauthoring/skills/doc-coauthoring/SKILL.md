@@ -1,6 +1,6 @@
 ---
-name: doc-coauthoring
-description: Use this skill when collaboratively creating structured documents like documentation, proposals, technical specs, decision docs, or any content requiring thoughtful iteration. Offers a three-stage workflow for high-quality document creation.
+name: coauthoring-documents
+description: Guides collaborative creation of structured documents through a three-stage workflow of context gathering, iterative refinement, and reader testing. Activates when the user drafts documentation, proposals, technical specs, or decision documents that benefit from structured co-authoring.
 ---
 
 # Document Co-Authoring Workflow

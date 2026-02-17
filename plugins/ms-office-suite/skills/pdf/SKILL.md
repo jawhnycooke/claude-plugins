@@ -1,6 +1,6 @@
 ---
-name: pdf
-description: Use this skill when working with PDF files - reading, creating, editing, merging, splitting, extracting text/tables, filling forms, or processing scanned documents with OCR.
+name: processing-pdfs
+description: Reads, creates, merges, splits, and edits PDF files, including text and table extraction, form filling, OCR on scanned documents, and watermarking. Activates when the user works with .pdf files or requests any PDF manipulation task.
 ---
 
 # PDF Processing Guide

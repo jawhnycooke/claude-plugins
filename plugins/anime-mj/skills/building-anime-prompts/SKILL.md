@@ -1,6 +1,6 @@
 ---
-name: anime-mj-prompt-builder
-description: Generates anime/manga prompts for Midjourney Niji mode with 30+ artist styles, SREF code library
+name: building-anime-prompts
+description: Builds structured anime and manga prompts for Midjourney Niji mode, matching artist styles, SREF codes, and technical parameters to user requests. Activates when the user wants to create anime art, reference specific manga artists or studios, use Niji mode, or generate character reference sheets and animations.
 ---
 
 # Anime/Manga Prompt Builder Skill

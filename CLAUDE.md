@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository Overview
 
-This is the official Claude Code Plugins Directory for Jawhny Cooke - a curated collection of high-quality plugins maintained by Anthropic and others. The repository serves as a marketplace for Claude Code extensions. Many of the plugins have been authored by or modified from their original Anthropic versions to fit Jawhny Cooke's prompting style and workflows
+This is the Jawhny Cooke - Claude Code Plugins Directory, a curated collection of high-quality plugins maintained by Anthropic and others. The repository serves as a marketplace for Claude Code extensions. Many of the plugins have been authored by or modified from their original Anthropic versions to fit Jawhny Cooke's prompting style and workflows
 
 ## Structure
 

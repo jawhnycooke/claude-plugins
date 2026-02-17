@@ -1,6 +1,6 @@
 ---
-name: example-skill
-description: This skill should be used when the user asks to "demonstrate skills", "show skill format", "create a skill template", or discusses skill development patterns. Provides a reference template for creating Claude Code plugin skills.
+name: demonstrating-skill-format
+description: Provides a reference template and structural guide for creating Claude Code plugin skills. Activates when the user asks about skill development patterns, requests a skill template, or wants to understand the SKILL.md format and frontmatter options.
 version: 1.0.0
 ---
 
