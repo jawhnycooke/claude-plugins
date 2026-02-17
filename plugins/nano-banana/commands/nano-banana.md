@@ -1,7 +1,5 @@
 ---
-name: nano-banana
 description: Interactive JSON Prompt Translator for Nano Banana Pro - Converts natural language to structured image generation specs
-version: 1.0.0
 argument-hint: "[description of image, UI, or diagram you want to create]"
 ---
 

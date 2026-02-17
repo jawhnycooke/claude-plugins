@@ -1,7 +1,5 @@
 ---
-name: anime-mj
 description: Anime/manga prompt builder for Midjourney Niji mode - 30+ artists, 14 studios
-version: 1.0.0
 argument-hint: "[description of anime/manga art you want to create]"
 ---
 
